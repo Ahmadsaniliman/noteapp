@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "814388211788",
+    "project_id": "limannotebookfirebase",
+    "storage_bucket": "limannotebookfirebase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:814388211788:android:739ec8ccd965c1a15944e9",
+        "android_client_info": {
+          "package_name": "com.example.myfirstnotebook"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwKH1uoJitkjLnsiJBMUtn3GrkJPmy36o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
