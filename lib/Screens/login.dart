@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:myfirstnotebook/AlertModel/alert_model.dart';
+import 'package:myfirstnotebook/Firebase/Auth/auth_provider.dart';
 import 'package:myfirstnotebook/Screens/Components/app_bar.dart';
 import 'package:myfirstnotebook/Screens/Components/button.dart';
 import 'package:myfirstnotebook/Screens/Components/custom_text_button.dart';
@@ -8,7 +10,7 @@ import 'package:myfirstnotebook/Screens/Components/google_button.dart';
 import 'package:myfirstnotebook/Screens/forgot_password.dart';
 import 'package:myfirstnotebook/Screens/register.dart';
 import 'package:myfirstnotebook/Screens/verify_email.dart';
-
+import 'dart:developer' as devtool show log;
 
 class LoginScreen extends ConsumerWidget {
   LoginScreen({super.key});
@@ -95,7 +97,32 @@ class LoginScreen extends ConsumerWidget {
                 ),
                 CustomButton(
                   text: 'Login',
-                  onTapped: () {},
+                  onTapped: () async {
+                    final email = emailController.text.trim();
+                    final password = passwordController.text.trim();
+                    if (email.isEmpty || password.isEmpty) {
+                      await showAlertDialog(
+                        context: context,
+                        text: 'Heyy',
+                        description:
+                            'Heyy Please Fill Both Email And Password Fields',
+                        buttonText1: '',
+                        buttonText2: 'Ok',
+                        onTapped1: () {
+                          Navigator.of(context).pop();
+                        },
+                      );
+                    } else {
+                      await ref.read(authProvider.notifier).loginUser(
+                            context: context,
+                            email: email,
+                            password: password,
+                          );
+                      emailController.clear();
+                      passwordController.clear();
+                      devtool.log('LoggedIn Successsfull');
+                    }
+                  },
                 ),
                 const SizedBox(height: 15),
                 GoogleButton(

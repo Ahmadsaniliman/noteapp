@@ -5,8 +5,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myfirstnotebook/Firebase/Auth/auth.dart';
 import 'package:myfirstnotebook/Loading/loading.dart';
 
-
-
 class AuthenticationState extends StateNotifier {
   final _auth = FirebaseAuthenticator();
 
@@ -57,7 +55,7 @@ class AuthenticationState extends StateNotifier {
 
   Future<void> logOut(BuildContext context) async {
     LoadingScreen.instance().show(context: context);
-    await _auth.logOut();
+    await _auth.logOut(context);
     LoadingScreen.instance().hide();
   }
 }

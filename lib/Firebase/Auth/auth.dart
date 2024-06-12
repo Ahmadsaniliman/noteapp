@@ -4,18 +4,18 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:myfirstnotebook/AlertModel/alert_model.dart';
+import 'package:myfirstnotebook/Loading/loading.dart';
 import 'dart:developer' as devtool show log;
-
-// import 'package:myfirstnotebook/TypeDefs/user_id.dart';
-
+import 'package:myfirstnotebook/TypeDefs/user_id.dart';
 
 class FirebaseAuthenticator {
   FirebaseAuthenticator();
 
-//   final UserId? userId = FirebaseAuth.instance.currentUser as UserId;
-//   final isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
+  UserId? get userId => FirebaseAuth.instance.currentUser!.uid;
+//   bool isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified ?? false;
 //   String get displayName =>
-//       FirebaseAuth.instance.currentUser!.displayName ?? 'no name';
+  //   FirebaseAuth.instance.currentUser!.displayName ?? 'no name';
+  User? get currentUser => FirebaseAuth.instance.currentUser;
 
   Future<void> createUser({
     required BuildContext context,
@@ -26,8 +26,11 @@ class FirebaseAuthenticator {
       final credentials = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
       devtool.log(credentials.toString());
+      await currentUser!.sendEmailVerification();
     } on FirebaseException catch (e) {
-      if (e.code == 'user-already-exist') {
+      if (e.code == 'email-already-in-use') {
+        // LoadingScreen.instance().show(context: context);
+        LoadingScreen.instance().hide();
         await showAlertDialog(
           context: context,
           text: 'Heyy',
@@ -40,6 +43,7 @@ class FirebaseAuthenticator {
         );
         devtool.log('user already exist');
       } else if (e.code == 'weak-password') {
+        LoadingScreen.instance().hide();
         await showAlertDialog(
           context: context,
           text: 'Heyy',
@@ -53,6 +57,7 @@ class FirebaseAuthenticator {
         devtool.log('weak password used');
       }
     } catch (e) {
+      LoadingScreen.instance().hide();
       await showAlertDialog(
         context: context,
         text: 'Heyy',
@@ -78,9 +83,12 @@ class FirebaseAuthenticator {
         email: email,
         password: password,
       );
+      verifyEmail(context, email);
+
       devtool.log(credentials.toString());
     } on FirebaseException catch (e) {
       if (e.code == 'wrong-password') {
+        LoadingScreen.instance().hide();
         await showAlertDialog(
           context: context,
           text: 'Heyy',
@@ -92,7 +100,8 @@ class FirebaseAuthenticator {
           },
         );
         devtool.log('wrong password used');
-      } else if (e.code == 'invalid-user') {
+      } else if (e.code == 'user-not-found') {
+        LoadingScreen.instance().hide();
         await showAlertDialog(
           context: context,
           text: 'Heyy',
@@ -110,12 +119,13 @@ class FirebaseAuthenticator {
     }
   }
 
-  Future<void> logOut() async {
+  Future<void> logOut(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
   }
 
   Future<void> verifyEmail(BuildContext context, String email) async {
     await FirebaseAuth.instance.currentUser!.sendEmailVerification();
+    LoadingScreen.instance().hide();
     await showAlertDialog(
       context: context,
       text: 'Heyy',

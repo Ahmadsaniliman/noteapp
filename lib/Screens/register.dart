@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myfirstnotebook/AlertModel/alert_model.dart';
-import 'package:myfirstnotebook/Firebase/Auth/auth.dart';
+import 'package:myfirstnotebook/Firebase/Auth/auth_provider.dart';
 import 'package:myfirstnotebook/Screens/Components/app_bar.dart';
 import 'package:myfirstnotebook/Screens/Components/button.dart';
 import 'package:myfirstnotebook/Screens/Components/custom_text_button.dart';
@@ -11,13 +11,13 @@ import 'package:myfirstnotebook/Screens/Components/custom_text_field.dart';
 import 'package:myfirstnotebook/Screens/Components/google_button.dart';
 import 'package:myfirstnotebook/Screens/login.dart';
 
-class RegisterScreen extends ConsumerWidget {
-  RegisterScreen({super.key});
+class RegisterScreen extends StatelessWidget {
+  const RegisterScreen({super.key});
 
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
+    final TextEditingController emailController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -73,7 +73,7 @@ class RegisterScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: 15),
                 Consumer(
-                  builder: (context, ref, child) => CustomButton(
+                  builder: (_, ref, child) => CustomButton(
                     text: 'Register',
                     onTapped: () async {
                       final email = emailController.text.trim();
@@ -92,12 +92,13 @@ class RegisterScreen extends ConsumerWidget {
                           },
                         );
                       } else {
-                        // LoadingScreen.instance().show(context: context);
-                        FirebaseAuthenticator().createUser(
-                            context: context, email: email, password: password);
+                        await ref.read(authProvider.notifier).createUser(
+                              context: context,
+                              email: email,
+                              password: password,
+                            );
                         emailController.clear();
                         passwordController.clear();
-                        // LoadingScreen.instance().hide();
                       }
                     },
                   ),
