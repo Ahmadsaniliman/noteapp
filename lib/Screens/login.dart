@@ -1,13 +1,16 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myfirstnotebook/AlertModel/alert_model.dart';
 import 'package:myfirstnotebook/Firebase/Auth/auth_provider.dart';
+import 'package:myfirstnotebook/Loading/loading.dart';
 import 'package:myfirstnotebook/Screens/Components/app_bar.dart';
 import 'package:myfirstnotebook/Screens/Components/button.dart';
 import 'package:myfirstnotebook/Screens/Components/custom_text_button.dart';
 import 'package:myfirstnotebook/Screens/Components/custom_text_field.dart';
 import 'package:myfirstnotebook/Screens/Components/google_button.dart';
 import 'package:myfirstnotebook/Screens/forgot_password.dart';
+import 'package:myfirstnotebook/Screens/home.dart';
 import 'package:myfirstnotebook/Screens/register.dart';
 import 'package:myfirstnotebook/Screens/verify_email.dart';
 import 'dart:developer' as devtool show log;
@@ -120,6 +123,12 @@ class LoginScreen extends ConsumerWidget {
                           );
                       emailController.clear();
                       passwordController.clear();
+                      // ignore: use_build_context_synchronously
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => HomePage(),
+                        ),
+                      );
                       devtool.log('LoggedIn Successsfull');
                     }
                   },

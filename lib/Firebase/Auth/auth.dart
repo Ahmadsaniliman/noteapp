@@ -83,7 +83,6 @@ class FirebaseAuthenticator {
         email: email,
         password: password,
       );
-      verifyEmail(context, email);
 
       devtool.log(credentials.toString());
     } on FirebaseException catch (e) {
