@@ -9,7 +9,6 @@ import 'package:myfirstnotebook/Screens/Components/button.dart';
 import 'package:myfirstnotebook/Screens/Components/custom_text_button.dart';
 import 'package:myfirstnotebook/Screens/Components/custom_text_field.dart';
 import 'package:myfirstnotebook/Screens/Components/google_button.dart';
-import 'package:myfirstnotebook/Screens/home.dart';
 import 'package:myfirstnotebook/Screens/login.dart';
 
 class RegisterScreen extends StatelessWidget {

@@ -7,8 +7,6 @@ import 'package:myfirstnotebook/Screens/Components/custom_text_field.dart';
 import 'package:myfirstnotebook/Screens/login.dart';
 import 'package:myfirstnotebook/Screens/register.dart';
 
-
-
 class ForgotPasswordScreen extends ConsumerWidget {
   ForgotPasswordScreen({super.key});
   final TextEditingController emailController = TextEditingController();
@@ -41,7 +39,7 @@ class ForgotPasswordScreen extends ConsumerWidget {
                     onTapped: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => RegisterScreen(),
+                          builder: (context) => const RegisterScreen(),
                         ),
                       );
                     },

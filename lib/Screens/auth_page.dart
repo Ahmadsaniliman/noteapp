@@ -10,7 +10,7 @@ class AuthPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (isEmail == true) {
-      return HomePage();
+      return const HomePage();
     } else {
       return LoginScreen();
     }

@@ -55,7 +55,7 @@ class AuthenticationState extends StateNotifier {
 
   Future<void> logOut(BuildContext context) async {
     LoadingScreen.instance().show(context: context);
-    await _auth.logOut(context);
+     _auth.logOut(context);
     LoadingScreen.instance().hide();
   }
 }

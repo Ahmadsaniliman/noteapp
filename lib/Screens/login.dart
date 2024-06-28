@@ -1,9 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myfirstnotebook/AlertModel/alert_model.dart';
 import 'package:myfirstnotebook/Firebase/Auth/auth_provider.dart';
-import 'package:myfirstnotebook/Loading/loading.dart';
 import 'package:myfirstnotebook/Screens/Components/app_bar.dart';
 import 'package:myfirstnotebook/Screens/Components/button.dart';
 import 'package:myfirstnotebook/Screens/Components/custom_text_button.dart';
@@ -70,7 +68,7 @@ class LoginScreen extends ConsumerWidget {
                         onTapped: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => RegisterScreen(),
+                              builder: (context) => const RegisterScreen(),
                             ),
                           );
                         },
@@ -126,7 +124,7 @@ class LoginScreen extends ConsumerWidget {
                       // ignore: use_build_context_synchronously
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => HomePage(),
+                          builder: (context) => const HomePage(),
                         ),
                       );
                       devtool.log('LoggedIn Successsfull');

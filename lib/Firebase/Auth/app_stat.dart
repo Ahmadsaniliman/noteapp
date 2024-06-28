@@ -7,6 +7,8 @@ class AppState {
 
   AppState.unKnow() : isLoading = false;
 
+  AppState copyWith(bool isLoading) => AppState(isLoading: isLoading);
+
   @override
   String toString() => 'AppState(isLoading: $isLoading)';
 

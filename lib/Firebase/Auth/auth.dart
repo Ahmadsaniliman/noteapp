@@ -120,6 +120,7 @@ class FirebaseAuthenticator {
 
   Future<void> logOut(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
+    await GoogleSignIn().signOut();
   }
 
   Future<void> verifyEmail(BuildContext context, String email) async {
