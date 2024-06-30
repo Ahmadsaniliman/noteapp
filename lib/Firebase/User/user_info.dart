@@ -4,8 +4,8 @@ import 'package:myfirstnotebook/Firebase/FieldNames/firebase_field_names.dart';
 import 'package:myfirstnotebook/Firebase/User/user_info_pay_load.dart';
 import 'package:myfirstnotebook/TypeDefs/user_id.dart';
 
-class SaveUserInfo {
-  const SaveUserInfo();
+class SaveUserMail {
+  const SaveUserMail();
 
   Future<bool> saveUserEmail({
     required String email,
@@ -19,19 +19,19 @@ class SaveUserInfo {
           .get();
 
       if (userInfo.docs.isNotEmpty) {
-        await userInfo.docs.first.reference.update(
+        userInfo.docs.first.reference.update(
           {
             FireBaseFieldNames.userEmail: email,
           },
         );
         return true;
-      } else {
-        final userPayLoad = UserInfoPayLoad(email: email);
-        await FirebaseFirestore.instance
-            .collection(CollectionNames.users)
-            .add(userPayLoad);
-        return true;
       }
+
+      final userInfoPayLoad = UserInfoPayLoad(email: email);
+      await FirebaseFirestore.instance
+          .collection(CollectionNames.users)
+          .add(userInfoPayLoad);
+      return true;
     } catch (e) {
       return false;
     }
