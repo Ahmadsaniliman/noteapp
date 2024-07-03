@@ -3,12 +3,21 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:myfirstnotebook/Firebase/Auth/auth.dart';
+import 'package:myfirstnotebook/Firebase/User/user_info.dart';
 import 'package:myfirstnotebook/Loading/loading.dart';
+import 'package:myfirstnotebook/TypeDefs/user_id.dart';
 
 class AuthenticationState extends StateNotifier {
+  final saveUserInfo = const SaveUserMail();
   final _auth = FirebaseAuthenticator();
 
   AuthenticationState() : super(false);
+
+  Future<void> saveInfo({required UserId userId, required String email}) =>
+      saveUserInfo.saveUserEmail(
+        userId: userId,
+        email: email,
+      );
   Future<void> createUser({
     required BuildContext context,
     required String email,
@@ -16,6 +25,7 @@ class AuthenticationState extends StateNotifier {
   }) async {
     LoadingScreen.instance().show(context: context);
     await _auth.createUser(context: context, email: email, password: password);
+    // saveInfo(userId: userId, email: email);
     LoadingScreen.instance().hide();
   }
 
@@ -55,7 +65,7 @@ class AuthenticationState extends StateNotifier {
 
   Future<void> logOut(BuildContext context) async {
     LoadingScreen.instance().show(context: context);
-     _auth.logOut(context);
+    _auth.logOut(context);
     LoadingScreen.instance().hide();
   }
 }

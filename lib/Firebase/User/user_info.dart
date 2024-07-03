@@ -18,7 +18,7 @@ class SaveUserMail {
           .limit(1)
           .get();
 
-      if (userInfo.docs.isNotEmpty) {
+      if (userInfo.docs.isNotEmpty) { 
         userInfo.docs.first.reference.update(
           {
             FireBaseFieldNames.userEmail: email,
