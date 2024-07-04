@@ -7,11 +7,11 @@ import 'package:myfirstnotebook/Firebase/User/user_info.dart';
 import 'package:myfirstnotebook/Loading/loading.dart';
 import 'package:myfirstnotebook/TypeDefs/user_id.dart';
 
-class AuthenticationState extends StateNotifier {
+class AuthenticationState extends StateNotifier<FirebaseAuthenticator> {
   final saveUserInfo = const SaveUserMail();
   final _auth = FirebaseAuthenticator();
 
-  AuthenticationState() : super(false);
+  AuthenticationState() : super(false as FirebaseAuthenticator);
 
   Future<void> saveInfo({required UserId userId, required String email}) =>
       saveUserInfo.saveUserEmail(

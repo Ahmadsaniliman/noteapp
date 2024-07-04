@@ -1,6 +1,5 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:myfirstnotebook/Firebase/FieldNames/firebase_field_names.dart';
 import 'package:uuid/uuid.dart';
 
 @immutable
@@ -8,12 +7,6 @@ class Note {
   final String id;
   final String title;
   final String noteText;
-
-  Note({
-    String? id,
-    required this.title,
-    required this.noteText,
-  }) : id = id ?? const Uuid().v4();
 
   @override
   bool operator ==(covariant Note other) =>
@@ -34,14 +27,12 @@ class Note {
   @override
   String toString() => 'Note (id:$id, title:$title, noteText:$noteText)';
 
-  factory Note.fromMap(Map<String, dynamic> json) {
-    return Note(
-      id: json['id'] as String,
-      title: json['title'] as String,
-      noteText: json['noteText'] as String,
-    );
-  }
+  Note({
+    required this.id,
+    required Map<String, dynamic> json,
+  })  : title = json[FireBaseFieldNames.noteTile],
+        noteText = json[FireBaseFieldNames.noteText];
 
-  factory Note.fromJson(String source) =>
-      Note.fromMap(json.decode(source) as Map<String, dynamic>);
+  // factory Note.fromJson(String source) =>
+  //     Note.fromMap(json.decode(source) as Map<String, dynamic>);
 }
